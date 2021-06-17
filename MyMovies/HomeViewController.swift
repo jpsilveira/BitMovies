@@ -9,6 +9,7 @@
     import Alamofire
     
     class HomeViewController: UIViewController {
+        
         var genres: [Genre] = []
         
         let columns: CGFloat = 1
@@ -27,8 +28,25 @@
             super.viewDidLoad()
             print(Date())
             fetchData()
-
+            
             // Do any additional setup after loading the view.
+        }
+        
+    }
+    
+    
+    extension HomeViewController: RailCollectionViewCellDelegate {
+
+        func didSelectItemAt(movieID: Int) {
+            performSegue(withIdentifier: "HomeDetailSsegue", sender: movieID)
+	        }
+        
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "HomeDetailSsegue" {
+                if let detailViewController = segue.destination as? DetailViewController, let movieID = sender as? Int {
+                    detailViewController.movieID = movieID
+                }
+            }
         }
         
     }
@@ -48,6 +66,7 @@
             
             let genre = self.genres[indexPath.section]
             
+            cell?.delegate = self
             cell?.setUpRail(movies: genre.movies?.results ?? [])
             
             return cell ?? UICollectionViewCell()
@@ -142,7 +161,7 @@
                     self.collectionView.reloadData()
                     print("notify")
                     print(Date())
-
+                    
                 }
             }
         }

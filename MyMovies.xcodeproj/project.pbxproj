@@ -20,8 +20,10 @@
 		EA15728B26699292006A5858 /* MyMoviesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA15728A26699292006A5858 /* MyMoviesUITests.swift */; };
 		EA1572A226699B64006A5858 /* RailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1572A126699B64006A5858 /* RailCollectionViewCell.swift */; };
 		EA1572A726699ED1006A5858 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1572A626699ED1006A5858 /* MovieCollectionViewCell.swift */; };
+		EA1618632676CF6700ADF45F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1618622676CF6700ADF45F /* DetailViewController.swift */; };
 		EA41EB46266D8A1900204264 /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA41EB45266D8A1900204264 /* Movies.swift */; };
 		EA41EB48266DA92600204264 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA41EB47266DA92600204264 /* Genres.swift */; };
+		EA9978FB267ACB6E00DD6C08 /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9978FA267ACB6E00DD6C08 /* MovieDetail.swift */; };
 		EAEBA42A266D650F00B7A73E /* MovieCollectionReusableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEBA429266D650F00B7A73E /* MovieCollectionReusableViewHeader.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,8 +68,10 @@
 		EA15728C26699292006A5858 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA1572A126699B64006A5858 /* RailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA1572A626699ED1006A5858 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA1618622676CF6700ADF45F /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EA41EB45266D8A1900204264 /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
 		EA41EB47266DA92600204264 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
+		EA9978FA267ACB6E00DD6C08 /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		EAEBA429266D650F00B7A73E /* MovieCollectionReusableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionReusableViewHeader.swift; sourceTree = "<group>"; };
 		EE1525885366874638FBC5FF /* Pods_MyMovies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyMovies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEBE96C2D4637F823595CF8E /* Pods_MyMovies_MyMoviesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyMovies_MyMoviesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,8 +156,10 @@
 				EA15726826699290006A5858 /* AppDelegate.swift */,
 				EA41EB45266D8A1900204264 /* Movies.swift */,
 				EA41EB47266DA92600204264 /* Genres.swift */,
+				EA9978FA267ACB6E00DD6C08 /* MovieDetail.swift */,
 				EA15726A26699290006A5858 /* SceneDelegate.swift */,
 				EA15726C26699290006A5858 /* HomeViewController.swift */,
+				EA1618622676CF6700ADF45F /* DetailViewController.swift */,
 				EA1572A126699B64006A5858 /* RailCollectionViewCell.swift */,
 				EA1572A626699ED1006A5858 /* MovieCollectionViewCell.swift */,
 				EAEBA429266D650F00B7A73E /* MovieCollectionReusableViewHeader.swift */,
@@ -421,12 +427,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA1618632676CF6700ADF45F /* DetailViewController.swift in Sources */,
 				EA41EB48266DA92600204264 /* Genres.swift in Sources */,
 				EAEBA42A266D650F00B7A73E /* MovieCollectionReusableViewHeader.swift in Sources */,
 				EA41EB46266D8A1900204264 /* Movies.swift in Sources */,
 				EA15726D26699290006A5858 /* HomeViewController.swift in Sources */,
 				EA15726926699290006A5858 /* AppDelegate.swift in Sources */,
 				EA1572A226699B64006A5858 /* RailCollectionViewCell.swift in Sources */,
+				EA9978FB267ACB6E00DD6C08 /* MovieDetail.swift in Sources */,
 				EA1572A726699ED1006A5858 /* MovieCollectionViewCell.swift in Sources */,
 				EA15726B26699290006A5858 /* SceneDelegate.swift in Sources */,
 			);

@@ -8,7 +8,13 @@
 import UIKit
 import Kingfisher
 
+protocol RailCollectionViewCellDelegate {
+    func didSelectItemAt(movieID: Int)
+}
+
 class RailCollectionViewCell: UICollectionViewCell {
+    var delegate: RailCollectionViewCellDelegate?
+    
     var movies: [Movie] = []
     let columns: CGFloat = 1
     let rows: CGFloat = 2
@@ -38,9 +44,7 @@ extension RailCollectionViewCell: UICollectionViewDelegate, UICollectionViewData
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell
         
         let posterPath = self.movies[indexPath.item].posterPath
-        cell?.imageView!.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w154/\(posterPath ?? "")"))
-//        cell?.imageView!.image = UIImage(named:
-//                                            indexPath.item % 2 == 0 ? "flor_vermelha" : "flor_branca")
+        cell?.imageView?.kf.setImage(with: URL(string: "https://image.tmdb.org/t/p/w154/\(posterPath ?? "")"))
         
         return cell ?? UICollectionViewCell()
     }
@@ -54,6 +58,10 @@ extension RailCollectionViewCell: UICollectionViewDelegateFlowLayout {
         let height = collectionView.frame.height
         
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelectItemAt( movieID: self.movies[indexPath.item].id)
     }
     
     //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
