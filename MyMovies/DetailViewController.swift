@@ -27,7 +27,7 @@ class DetailViewController: UIViewController {
             self.evalLabel.text = "Avaliação: \(eval)"
             self.releaseLabel.text = "Lançamento: \(release.prefix(4))"
             self.overviewLabel.text = self.movieDetail?.overview
-           
+	           
         }
 
     }

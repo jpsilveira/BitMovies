@@ -16,13 +16,8 @@ class RailCollectionViewCell: UICollectionViewCell {
     var delegate: RailCollectionViewCellDelegate?
     
     var movies: [Movie] = []
-    let columns: CGFloat = 1
-    let rows: CGFloat = 2
     
     lazy var cellWidth: CGFloat = 100
-    
-    //    let spaceBetween: CGFloat = 10
-    //    lazy var margin: CGFloat = 10
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -54,10 +49,9 @@ extension RailCollectionViewCell: UICollectionViewDelegate, UICollectionViewData
 extension RailCollectionViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = cellWidth
         let height = collectionView.frame.height
         
-        return CGSize(width: width, height: height)
+        return CGSize(width: cellWidth, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

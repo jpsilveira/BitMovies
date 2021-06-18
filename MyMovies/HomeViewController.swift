@@ -26,20 +26,26 @@
         
         override func viewDidLoad() {
             super.viewDidLoad()
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon.png"), style: .plain, target: self, action: #selector(search))
+                        
             print(Date())
-            fetchData()
             
-            // Do any additional setup after loading the view.
+            fetchData()
+
+        }
+        
+        @objc func search () {
+            performSegue(withIdentifier: "HomeSearchSsegue", sender: nil )
         }
         
     }
     
     
     extension HomeViewController: RailCollectionViewCellDelegate {
-
+        
         func didSelectItemAt(movieID: Int) {
             performSegue(withIdentifier: "HomeDetailSsegue", sender: movieID)
-	        }
+        }
         
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "HomeDetailSsegue" {
@@ -78,10 +84,8 @@
     extension HomeViewController: UICollectionViewDelegateFlowLayout {
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let width = railWidth
-            let height = railHeight
             
-            return CGSize(width: width, height: height)
+            return CGSize(width: railWidth, height: railHeight)
         }
         
         //        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
