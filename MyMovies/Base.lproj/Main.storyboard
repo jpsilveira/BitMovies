@@ -154,7 +154,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="06p-cs-QFP">
-                                <rect key="frame" x="16" y="16" width="382" height="422"/>
+                                <rect key="frame" x="16" y="16" width="382" height="472"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iPt-Dm-NnT">
                                         <rect key="frame" x="92" y="0.0" width="198" height="280"/>
@@ -180,8 +180,34 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="w3G-Gc-D96">
+                                        <rect key="frame" x="113" y="340.5" width="156" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eei-9l-xUQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="26" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="26" id="77H-BW-I8d"/>
+                                                    <constraint firstAttribute="height" constant="30" id="79Y-DH-iEk"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="buttonClicked:" destination="Zuf-pN-sOj" eventType="touchUpInside" id="kyM-gA-y2M"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minha Lista" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDK-iA-Hl2" userLabel="O">
+                                                <rect key="frame" x="46" y="0.0" width="110" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="110" id="Yhk-8r-QfD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <color key="textColor" red="0.95294117649999999" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICX-vm-DlG">
-                                        <rect key="frame" x="0.0" y="340.5" width="382" height="81.5"/>
+                                        <rect key="frame" x="0.0" y="390.5" width="382" height="81.5"/>
                                         <string key="text">kj odaf jhghasgkajh gaergkuhjdlfhgka shrugfhoerjtkrht oiwertpijwoiryt whiotwhoity ouwjtiwrhnothkwrei kjt ufuoipk erierunieriwy iptou0eh9i4y89- yw4 t</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -203,6 +229,7 @@
                     <connections>
                         <outlet property="evalLabel" destination="zLE-Td-YlZ" id="npw-Xj-cAj"/>
                         <outlet property="imageView" destination="iPt-Dm-NnT" id="TLe-sD-gEs"/>
+                        <outlet property="myListButton" destination="Eei-9l-xUQ" id="Pee-RS-w9L"/>
                         <outlet property="overviewLabel" destination="ICX-vm-DlG" id="YJ6-4y-R5x"/>
                         <outlet property="releaseLabel" destination="u0Z-7m-aug" id="tgD-3m-VhY"/>
                     </connections>
@@ -233,7 +260,6 @@
         <!--Result View Controller-->
         <scene sceneID="rBX-8L-dNF">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KaW-QD-mrd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ResultViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="71G-43-JSj" customClass="ResultViewController" customModule="MyMovies" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DJF-38-Z2V">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -292,6 +318,7 @@
                         <outlet property="collectionView" destination="4dn-v5-dks" id="w7w-C6-HZH"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KaW-QD-mrd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1584" y="822"/>
         </scene>

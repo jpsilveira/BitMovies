@@ -90,14 +90,12 @@ extension ResultViewController: UICollectionViewDelegateFlowLayout {
             .responseDecodable(of: MovieSearch.self) { (response) in
                 
                 guard let localMovieSearch = response.value else {
-                    print("Deu merda")
+                    print("Error requesting movie search - \(String(describing: response.value))")
                     completionHandler()
                     return
                 }
                 
-                //            let genre = self.genres.first(where: { $0.id == genreID })
                 self.movieSearch = localMovieSearch.results
-                print(localMovieSearch)
                 completionHandler()
             }
     }

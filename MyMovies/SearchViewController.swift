@@ -28,10 +28,10 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, ResultVie
         }
         
         let viewController = searchController.searchResultsController  as? ResultViewController
- //       viewController?.view.backgroundColor = .yellow
+        //       viewController?.view.backgroundColor = .yellow
         viewController?.setUpMovieSearch( query: text)
         
-        print (text)
+        //        print (text)
     }
     
     func didSelectItemAt(movieID: Int) {

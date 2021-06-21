@@ -11,13 +11,18 @@ import Kingfisher
 
 class DetailViewController: UIViewController {
     var movieID: Int = 0
+    
     var movieDetail: MovieDetail?
-
+    
+    let myLocalStorage = MyLocalStorage()
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var evalLabel: UILabel!
     @IBOutlet weak var releaseLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
-
+    
+    @IBOutlet weak var myListButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchMovies {
@@ -27,11 +32,30 @@ class DetailViewController: UIViewController {
             self.evalLabel.text = "Avaliação: \(eval)"
             self.releaseLabel.text = "Lançamento: \(release.prefix(4))"
             self.overviewLabel.text = self.movieDetail?.overview
-	           
+            
+            self.myLocalStorage.getMyMoviesList()
+            
+            if self.myLocalStorage.searchMyMoviesList(movieID: self.movieDetail?.id ?? 0) == -1 {
+                self.myListButton.setImage(UIImage(named: "list_add.png"), for: UIControl.State.normal)
+            } else {
+                self.myListButton.setImage(UIImage(named: "list_added.png"), for: UIControl.State.normal)
+            }
         }
-
     }
-
+    
+    @IBAction func buttonClicked(_ sender: AnyObject?) {
+        
+        myLocalStorage.getMyMoviesList()
+        
+        if myLocalStorage.searchMyMoviesList(movieID: movieDetail?.id ?? 0) == -1 {
+            myLocalStorage.addMyMoviesList(movieID: movieID)
+            self.myListButton.setImage(UIImage(named: "list_added.png"), for: UIControl.State.normal)
+        } else {
+            myLocalStorage.removeMyMoviesList(movieID: movieID)
+            self.myListButton.setImage(UIImage(named: "list_add.png"), for: UIControl.State.normal)
+        }
+    }
+    
     func fetchMovies(completionHandler: @escaping () -> Void) {
         
         AF.request("https://api.themoviedb.org/3/movie/\(movieID)?api_key=6fa1d34154e23d43f7512f27eb9a7c76&language=pt")
@@ -39,12 +63,11 @@ class DetailViewController: UIViewController {
             .responseDecodable(of: MovieDetail.self) { (response) in
                 
                 guard let movieDetail = response.value else {
-                    print("Deu merda - \(self.movieID)")
+                    print("Error requesting movie detail - \(String(describing: response.value))")
                     completionHandler()
                     return
                 }
                 
-                print("okA")
                 self.movieDetail = movieDetail
                 completionHandler()
             }

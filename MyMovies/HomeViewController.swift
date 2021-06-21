@@ -11,27 +11,25 @@
     class HomeViewController: UIViewController {
         
         var genres: [Genre] = []
+        var myLocalStorage = MyLocalStorage()
         
         let columns: CGFloat = 1
         let rows: CGFloat = 2
         
         lazy var railWidth: CGFloat = collectionView.frame.width
         var railHeight: CGFloat = 150
-        
-        //        let spaceBetween: CGFloat = 50
-        //        let spaceHeader: CGFloat = 2
-        //        lazy var margin: CGFloat = 5
+        var headerHeight: CGFloat = 44
         
         @IBOutlet weak var collectionView: UICollectionView!
         
         override func viewDidLoad() {
             super.viewDidLoad()
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon.png"), style: .plain, target: self, action: #selector(search))
-                        
-            print(Date())
+            
+            myLocalStorage.getMyMoviesList()
             
             fetchData()
-
+            
         }
         
         @objc func search () {
@@ -51,6 +49,12 @@
             if segue.identifier == "HomeDetailSsegue" {
                 if let detailViewController = segue.destination as? DetailViewController, let movieID = sender as? Int {
                     detailViewController.movieID = movieID
+                    
+                    //                    myLocalStorage.addMyMoviesList(movieID: movieID)
+                    
+                    //                    let tt: [Int] = myLocalStorage.returnMyMoviesList()
+                    //                    print( tt )
+                    
                 }
             }
         }
@@ -123,7 +127,7 @@
         }
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-            return CGSize(width: collectionView.frame.width, height: 44 )
+            return CGSize(width: collectionView.frame.width, height: headerHeight )
         }
     }
     
@@ -136,14 +140,13 @@
                 .responseDecodable(of: Movies.self) { (response) in
                     
                     guard let movies = response.value else {
-                        print("Deu merda - \(genreID)")
+                        print("Error requesting movies - \(String(describing: response.value))")
                         completionHandler()
                         return
                     }
                     
                     let genre = self.genres.first(where: { $0.id == genreID })
                     genre?.movies = movies
-                    print("ok2")
                     completionHandler()
                 }
         }
@@ -154,18 +157,13 @@
                 self.genres.forEach { genre in
                     
                     dispatchGroup.enter()
-                    print("enter")
                     self.fetchMovies(genreID: genre.id) {
                         dispatchGroup.leave()
-                        print("leave")
                     }
                 }
                 
                 dispatchGroup.notify(queue: .main) {
                     self.collectionView.reloadData()
-                    print("notify")
-                    print(Date())
-                    
                 }
             }
         }
@@ -177,7 +175,7 @@
                 .responseDecodable(of: Genres.self) { (response) in
                     
                     guard let genres = response.value else {
-                        print("Deu merda2")
+                        print("Error requesting genres - \(String(describing: response.value))")
                         completionHandler()
                         return }
                     
