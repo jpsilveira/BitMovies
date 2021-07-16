@@ -9,33 +9,28 @@ import Foundation
 
 class MyLocalStorage {
     
-    var myMoviesList: [Int] = []
+    var myMoviesList: [[String: Any]] = []
     var userDefaults = UserDefaults.standard
     
     func getMyMoviesList() {
-        
-        myMoviesList = userDefaults.object(forKey: "MyMoviesList") as! [Int]
+        myMoviesList = userDefaults.object(forKey: "MyMoviesList") as? [[String: Any]] ?? []
         
     }
     
     func setMyMoviesList() {
-        
         userDefaults.set(myMoviesList, forKey: "MyMoviesList")
-        
     }
     
-    func returnMyMoviesList()-> [Int] {
-        
+    func returnMyMoviesList() -> [[String: Any]] {
         return myMoviesList
-        
     }
     
-    func addMyMoviesList(movieID: Int) {
-        
+    func addMyMoviesList(movieID: Int, posterPath: String) {
         if searchMyMoviesList(movieID: movieID) == -1 {
-            
-            myMoviesList.append(movieID)
-            
+            myMoviesList.append([
+                "id": movieID,
+                "posterPath": posterPath
+            ])
             setMyMoviesList()
         }
     }
@@ -45,15 +40,15 @@ class MyLocalStorage {
         
         position = searchMyMoviesList(movieID: movieID)
         
-        if position != -1 {
-            myMoviesList.remove( at: myMoviesList.firstIndex(of: movieID)!)
+        if position != -1, let index = myMoviesList.firstIndex(where: { $0["id"] as? Int == movieID }) {
+            myMoviesList.remove(at: index)
             setMyMoviesList()
         }
     }
     
     func searchMyMoviesList(movieID: Int) -> Int {
         
-        let position = myMoviesList.first(where: {$0 == movieID})
+        let position = myMoviesList.firstIndex(where: { $0["id"] as? Int == movieID})
         
         return position ?? -1
     }

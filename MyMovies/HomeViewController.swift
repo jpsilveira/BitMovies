@@ -50,11 +50,6 @@
                 if let detailViewController = segue.destination as? DetailViewController, let movieID = sender as? Int {
                     detailViewController.movieID = movieID
                     
-                    //                    myLocalStorage.addMyMoviesList(movieID: movieID)
-                    
-                    //                    let tt: [Int] = myLocalStorage.returnMyMoviesList()
-                    //                    print( tt )
-                    
                 }
             }
         }
@@ -121,7 +116,6 @@
             let genre = self.genres[indexPath.section]
             
             header.textLabel.text = genre.name
-            //            header?.textLabel.textAlignment = .left
             
             return header
         }
@@ -181,10 +175,33 @@
                     
                     self.genres = genres.genres
                     
+//                    self.fetchFavorites{}
+                    
                     completionHandler()
                 }
-            
         }
-        
-        
+
+        func fetchFavorites( completionHandler: @escaping () -> Void) {
+
+            var movieID: Int = 0
+            
+            var favoriteList = myLocalStorage.returnMyMoviesList()
+            
+            for movie in favoriteList {
+            
+            AF.request("https://api.themoviedb.org/3/movie/\(movieID)?api_key=6fa1d34154e23d43f7512f27eb9a7c76&language=pt")
+                .validate()
+                .responseDecodable(of: Genres.self) { (response) in
+                    
+                    guard let genres = response.value else {
+                        print("Error requesting genres - \(String(describing: response.value))")
+                        completionHandler()
+                        return }
+                    
+                    self.genres = genres.genres
+                    
+                    completionHandler()
+                }
+            }
+        }
     }

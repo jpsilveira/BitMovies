@@ -48,8 +48,11 @@ class DetailViewController: UIViewController {
         myLocalStorage.getMyMoviesList()
         
         if myLocalStorage.searchMyMoviesList(movieID: movieDetail?.id ?? 0) == -1 {
-            myLocalStorage.addMyMoviesList(movieID: movieID)
+            guard let posterPath = movieDetail?.posterPath else { return }
+            
+            myLocalStorage.addMyMoviesList(movieID: movieID, posterPath: posterPath )
             self.myListButton.setImage(UIImage(named: "list_added.png"), for: UIControl.State.normal)
+            
         } else {
             myLocalStorage.removeMyMoviesList(movieID: movieID)
             self.myListButton.setImage(UIImage(named: "list_add.png"), for: UIControl.State.normal)
