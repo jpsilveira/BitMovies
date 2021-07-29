@@ -32,25 +32,22 @@ class DetailViewController: UIViewController {
             self.evalLabel.text = "Avaliação: \(eval)"
             self.releaseLabel.text = "Lançamento: \(release.prefix(4))"
             self.overviewLabel.text = self.movieDetail?.overview
+            self.title = self.movieDetail?.title ?? ""
             
-            self.myLocalStorage.getMyMoviesList()
-            
-            if self.myLocalStorage.searchMyMoviesList(movieID: self.movieDetail?.id ?? 0) == -1 {
-                self.myListButton.setImage(UIImage(named: "list_add.png"), for: UIControl.State.normal)
-            } else {
+            if self.myLocalStorage.isAlreadyAdded(id: self.movieID ) {
                 self.myListButton.setImage(UIImage(named: "list_added.png"), for: UIControl.State.normal)
+            } else {
+                self.myListButton.setImage(UIImage(named: "list_add.png"), for: UIControl.State.normal)
             }
         }
     }
     
     @IBAction func buttonClicked(_ sender: AnyObject?) {
-        
-        myLocalStorage.getMyMoviesList()
-        
-        if myLocalStorage.searchMyMoviesList(movieID: movieDetail?.id ?? 0) == -1 {
-            guard let posterPath = movieDetail?.posterPath else { return }
+        if !myLocalStorage.isAlreadyAdded(id: movieID ) {
+            guard let posterPath = movieDetail?.posterPath, let title = movieDetail?.title else { return }
             
-            myLocalStorage.addMyMoviesList(movieID: movieID, posterPath: posterPath )
+            myLocalStorage.addMyMoviesList(movieID: movieID, title: title, posterPath: posterPath )
+            
             self.myListButton.setImage(UIImage(named: "list_added.png"), for: UIControl.State.normal)
             
         } else {

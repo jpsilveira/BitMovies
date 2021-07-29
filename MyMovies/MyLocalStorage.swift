@@ -9,48 +9,40 @@ import Foundation
 
 class MyLocalStorage {
     
-    var myMoviesList: [[String: Any]] = []
+    lazy var myMoviesList: [[String: Any]] = self.getMyMoviesList()
+    
     var userDefaults = UserDefaults.standard
     
-    func getMyMoviesList() {
-        myMoviesList = userDefaults.object(forKey: "MyMoviesList") as? [[String: Any]] ?? []
-        
+    func isAlreadyAdded(id: Int) -> Bool {
+        return searchMyMoviesList(movieID: id) != nil
+    }
+    
+    func getMyMoviesList() ->  [[String: Any]] {
+        return userDefaults.object(forKey: "MyMoviesList") as? [[String: Any]] ?? []
     }
     
     func setMyMoviesList() {
         userDefaults.set(myMoviesList, forKey: "MyMoviesList")
     }
     
-    func returnMyMoviesList() -> [[String: Any]] {
-        return myMoviesList
-    }
-    
-    func addMyMoviesList(movieID: Int, posterPath: String) {
-        if searchMyMoviesList(movieID: movieID) == -1 {
-            myMoviesList.append([
-                "id": movieID,
-                "posterPath": posterPath
-            ])
-            setMyMoviesList()
-        }
+    func addMyMoviesList(movieID: Int, title: String, posterPath: String) {
+        guard !isAlreadyAdded(id: movieID) else { return }
+        myMoviesList.append([
+            "id": movieID,
+            "title": title,
+            "posterPath": posterPath
+        ])
+        setMyMoviesList()
+        
     }
     
     func removeMyMoviesList(movieID: Int) {
-        var position: Int
-        
-        position = searchMyMoviesList(movieID: movieID)
-        
-        if position != -1, let index = myMoviesList.firstIndex(where: { $0["id"] as? Int == movieID }) {
-            myMoviesList.remove(at: index)
-            setMyMoviesList()
-        }
+        guard let index = searchMyMoviesList(movieID: movieID) else { return }
+        myMoviesList.remove(at: index)
+        setMyMoviesList()
     }
     
-    func searchMyMoviesList(movieID: Int) -> Int {
-        
-        let position = myMoviesList.firstIndex(where: { $0["id"] as? Int == movieID})
-        
-        return position ?? -1
+    func searchMyMoviesList(movieID: Int) -> Int? {
+        return myMoviesList.firstIndex(where: { $0["id"] as? Int == movieID})
     }
 }
-

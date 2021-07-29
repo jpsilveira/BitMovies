@@ -20,6 +20,11 @@ class Genre: Decodable {
         
     }
     
+    init(id: Int, name: String, movies: Movies? = nil) {
+        self.id = id
+        self.name = name
+        self.movies = movies
+    }
 }
 
 

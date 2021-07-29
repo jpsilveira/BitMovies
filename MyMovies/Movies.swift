@@ -4,11 +4,18 @@
 //
 //  Created by João Paulo Silveira on 06/06/21.
 //
-struct Movies: Decodable {
-    let page: Int
+class Movies: Decodable {
+    var page: Int = 0
     let results: [Movie]
+    
+    init(page: Int = 0, results: [Movie]) {
+        self.page = page
+        self.results = results
+    }
+    
 }
-struct Movie: Decodable {
+
+class Movie: Decodable {
     let id: Int
     let title: String
     let posterPath: String?
@@ -18,5 +25,13 @@ struct Movie: Decodable {
         case title
         case posterPath = "poster_path"
         
+    }
+    
+    init(id: Int,
+    title: String,
+    posterPath: String?) {
+        self.id = id
+        self.title = title
+        self.posterPath = posterPath
     }
 }

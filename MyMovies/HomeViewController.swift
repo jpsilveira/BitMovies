@@ -22,6 +22,12 @@
         
         @IBOutlet weak var collectionView: UICollectionView!
         
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            self.fetchFavorites()
+            self.collectionView.reloadData()
+        }
+        
         override func viewDidLoad() {
             super.viewDidLoad()
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "search_icon.png"), style: .plain, target: self, action: #selector(search))
@@ -29,15 +35,12 @@
             myLocalStorage.getMyMoviesList()
             
             fetchData()
-            
         }
         
         @objc func search () {
             performSegue(withIdentifier: "HomeSearchSsegue", sender: nil )
         }
-        
     }
-    
     
     extension HomeViewController: RailCollectionViewCellDelegate {
         
@@ -53,7 +56,6 @@
                 }
             }
         }
-        
     }
     
     extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -86,24 +88,6 @@
             
             return CGSize(width: railWidth, height: railHeight)
         }
-        
-        //        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        //
-        //            return spaceBetween
-        //        }
-        //
-        //        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        //
-        //            return spaceHeader
-        //        }
-        //
-        //        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        //            let inset = UIEdgeInsets(top: margin,
-        //                                     left: margin,
-        //                                     bottom: margin,
-        //                                     right: margin)
-        //            return inset
-        //        }
         
         func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
             
@@ -157,6 +141,7 @@
                 }
                 
                 dispatchGroup.notify(queue: .main) {
+                    self.fetchFavorites()
                     self.collectionView.reloadData()
                 }
             }
@@ -175,33 +160,33 @@
                     
                     self.genres = genres.genres
                     
-//                    self.fetchFavorites{}
-                    
                     completionHandler()
                 }
         }
-
-        func fetchFavorites( completionHandler: @escaping () -> Void) {
-
-            var movieID: Int = 0
+        
+        func fetchFavorites() {
             
-            var favoriteList = myLocalStorage.returnMyMoviesList()
+            let favoriteList = myLocalStorage.getMyMoviesList()
+            
+            var movieList: [Movie] = []
             
             for movie in favoriteList {
-            
-            AF.request("https://api.themoviedb.org/3/movie/\(movieID)?api_key=6fa1d34154e23d43f7512f27eb9a7c76&language=pt")
-                .validate()
-                .responseDecodable(of: Genres.self) { (response) in
+                if let id = movie["id"] as? Int, let title = movie["title"] as? String, let posterPath = movie["posterPath"]  as? String{
+                    movieList.append(Movie(id: id, title: title, posterPath: posterPath	))
                     
-                    guard let genres = response.value else {
-                        print("Error requesting genres - \(String(describing: response.value))")
-                        completionHandler()
-                        return }
-                    
-                    self.genres = genres.genres
-                    
-                    completionHandler()
                 }
+                
             }
+            
+            let movies = Movies(results: movieList)
+            
+            let newGenre = Genre( id: -1, name: "Minha Lista", movies: movies)
+            
+            if let index = self.genres.firstIndex(where: { $0.id == -1}) {
+                self.genres.remove(at: index )
+            }
+            self.genres.insert(newGenre, at: 0)
+            
+            
         }
     }
